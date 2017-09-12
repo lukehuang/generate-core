@@ -1,0 +1,7 @@
+public class ${name_model}Controller {
+
+	public String index() {
+		return "${folder_name}/index";
+	}
+
+}

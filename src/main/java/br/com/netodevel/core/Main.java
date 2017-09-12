@@ -1,6 +1,6 @@
 package br.com.netodevel.core;
 
-import br.com.netodevel.generators.java.GeneratorController;
+import br.com.netodevel.generators.java.repository.GeneratorCleanRepository;
 
 public class Main {
 
@@ -9,7 +9,7 @@ public class Main {
 		System.out.println("---GENERATE CORE---");
 		System.out.println("-------------------");
 		
-		new GeneratorController("User").generate();
+		new GeneratorCleanRepository("User").generate();
 	}
 	
 }

@@ -17,19 +17,25 @@ public abstract class AbstractGenerator extends ReadScaffoldInfo implements Gene
 	}
 	
 	public String loadTemplateFile(String fileName) throws IOException {
-		InputStream in = getClass().getResourceAsStream("/templates/java/" + fileName);
+		InputStream in = getClass().getResourceAsStream("/templates/java/" + layer() + "/" + fileName);
 		String theString = IOUtils.toString(in, "UTF-8"); 
 		return theString;
 	}
 
 	public void createNewFile(String javaStrings, String fileOutPutName) throws IOException {
-		
-		fileOutPutName = getPathPackage() + packageName() + "/" + fileOutPutName 
-				+ StringUtils.capitalize(layer()) + "." + language();
-		
+		fileOutPutName = nameFileToGenerate(fileOutPutName);
+
 		File newJavaFile = new File(fileOutPutName);
 		FileUtils.writeStringToFile(newJavaFile, javaStrings);
 		System.out.println("created");
+	}
+
+	private String nameFileToGenerate(String fileOutPutName) {
+		fileOutPutName = getPathPackage() + packageName() 
+						+ "/" + fileOutPutName + StringUtils.capitalize(layer())
+						+ "." + language();
+		
+		return fileOutPutName;
 	}
 	
 }

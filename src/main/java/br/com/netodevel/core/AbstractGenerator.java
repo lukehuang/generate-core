@@ -29,12 +29,25 @@ public abstract class AbstractGenerator extends ReadScaffoldInfo implements Gene
 		FileUtils.writeStringToFile(newJavaFile, javaStrings);
 		System.out.println("created");
 	}
-
+	
 	private String nameFileToGenerate(String fileOutPutName) {
 		fileOutPutName = getPathPackage() + packageName() 
-						+ "/" + fileOutPutName + StringUtils.capitalize(layer())
-						+ "." + language();
+		+ "/" + fileOutPutName + StringUtils.capitalize(layer())
+		+ "." + language();
 		
+		return fileOutPutName;
+	}
+	
+	public void createNewResource(String javaStrings, String fileOutPutName, String folder) throws IOException {
+		fileOutPutName = nameResourceToGenerate(fileOutPutName, folder);
+
+		File newJavaFile = new File(fileOutPutName);
+		FileUtils.writeStringToFile(newJavaFile, javaStrings);
+		System.out.println("created");
+	}
+
+	private String nameResourceToGenerate(String fileOutPutName, String folder) {
+		fileOutPutName = getPathResources() + folder + "/" + fileOutPutName;
 		return fileOutPutName;
 	}
 	

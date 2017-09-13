@@ -2,6 +2,9 @@ package br.com.netodevel.generators.java.model;
 
 import br.com.netodevel.core.Generator;
 
+/**
+ * @author NetoDevel
+ */
 public class GeneratorModel extends Generator {
 
 	public GeneratorModel(String nameModel, String parameters) {

@@ -53,6 +53,10 @@ public abstract class ReadScaffoldInfo {
 		return pathPackage;
 	}
 	
+	public String getPathResources() {
+		return "src/main/resources/";
+	}
+	
 	public String getUserDatabase() throws IOException {
 		BufferedReader readArq = new BufferedReader(getArq());
 		String row = readArq.readLine();

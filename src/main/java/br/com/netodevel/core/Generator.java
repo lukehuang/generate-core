@@ -20,6 +20,9 @@ public abstract class Generator extends AbstractGenerator {
 		this.nameModel = nameModel;
 	}
 	
+	public Generator(){
+	}
+	
 	protected abstract String operationGenerate(String javaStrings, String nameClass, String parameters);
 	
 	public Generator generate() {

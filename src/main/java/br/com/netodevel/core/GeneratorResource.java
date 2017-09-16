@@ -2,8 +2,12 @@ package br.com.netodevel.core;
 
 import java.io.IOException;
 
-public abstract class GeneratorResource extends AbstractGenerator implements GeneratorResourceBase {
-
+/**
+ * @author NetoDevel
+ */
+public abstract class GeneratorResource extends AbstractGeneratorResource implements GeneratorResourceBase {
+	
+	public static final String ROOT = "";
 	protected GeneratorOptions generatorOptions;
 	
 	public GeneratorResource(GeneratorOptions generatorOptions) {
@@ -15,7 +19,7 @@ public abstract class GeneratorResource extends AbstractGenerator implements Gen
 	
 	public void generate(String resourceName) {
 		try {
-			String javaStrings = loadTemplateFile(templateFile());
+			String javaStrings = loadTemplateFileResources(templateFile());
 			String replaceStrings = operationGenerate(javaStrings, this.generatorOptions.getDatabase(),
 					this.generatorOptions.getOrm(), this.generatorOptions.getServer());
 			

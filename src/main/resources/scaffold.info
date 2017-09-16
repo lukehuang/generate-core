@@ -1,4 +1,4 @@
 package:br.com.netodevel
-dataBaseName:mydb
+dataBaseName:scaffold-db
 username:root
-password:root
+password:netinho123

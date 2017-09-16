@@ -38,17 +38,6 @@ public abstract class AbstractGenerator extends ReadScaffoldInfo implements Gene
 		return fileOutPutName;
 	}
 	
-	public void createNewResource(String javaStrings, String fileOutPutName, String folder) throws IOException {
-		fileOutPutName = nameResourceToGenerate(fileOutPutName, folder);
 
-		File newJavaFile = new File(fileOutPutName);
-		FileUtils.writeStringToFile(newJavaFile, javaStrings);
-		System.out.println("created");
-	}
-
-	private String nameResourceToGenerate(String fileOutPutName, String folder) {
-		fileOutPutName = getPathResources() + folder + "/" + fileOutPutName;
-		return fileOutPutName;
-	}
 	
 }

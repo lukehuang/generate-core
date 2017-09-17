@@ -10,18 +10,19 @@ public abstract class GeneratorResource extends AbstractGeneratorResource implem
 	public static final String ROOT = "";
 	protected GeneratorOptions generatorOptions;
 	
+	public GeneratorResource() {
+	}
+	
 	public GeneratorResource(GeneratorOptions generatorOptions) {
 		this.generatorOptions = generatorOptions;
 	}
 	
-	protected abstract String operationGenerate(String javaStrings, 
-				String database, String orm, String server);
+	protected abstract String operationGenerate(String javaStrings, GeneratorOptions generateOptions);
 	
 	public void generate(String resourceName) {
 		try {
 			String javaStrings = loadTemplateFileResources(templateFile());
-			String replaceStrings = operationGenerate(javaStrings, this.generatorOptions.getDatabase(),
-					this.generatorOptions.getOrm(), this.generatorOptions.getServer());
+			String replaceStrings = operationGenerate(javaStrings, this.generatorOptions);
 			
 			createNewResource(replaceStrings, resourceName, folder());
 		} catch (IOException e) {

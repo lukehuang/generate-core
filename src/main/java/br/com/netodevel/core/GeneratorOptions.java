@@ -8,6 +8,9 @@ public class GeneratorOptions {
 	private String database;
 	private String orm;
 	private String server;
+	private String packageName;
+	private String userDatabase;
+	private String passwordDatabase;
 
 	public GeneratorOptions setDatabase(String database) {
 		this.database = database;
@@ -34,6 +37,33 @@ public class GeneratorOptions {
 
 	public String getServer() {
 		return server;
+	}
+
+	public String getPackageName() {
+		return packageName;
+	}
+
+	public GeneratorOptions setPackageName(String packageName) {
+		this.packageName = packageName;
+		return this;
+	}
+
+	public String getUserDatabase() {
+		return userDatabase;
+	}
+
+	public GeneratorOptions setUserDatabase(String userDatabase) {
+		this.userDatabase = userDatabase;
+		return this;
+	}
+
+	public String getPasswordDatabase() {
+		return passwordDatabase;
+	}
+
+	public GeneratorOptions setPasswordDatabase(String passwordDatabase) {
+		this.passwordDatabase = passwordDatabase;
+		return this;
 	}
 	
 }

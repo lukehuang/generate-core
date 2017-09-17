@@ -24,24 +24,25 @@ public class GeneratorApplicationProperties extends GeneratorResource {
 	}
 
 	@Override
-	protected String operationGenerate(String javaStrings, String database, String orm, String server) {
+	protected String operationGenerate(String javaStrings, GeneratorOptions generatorOptions) {
+		
 		/**
 		 * TODO: factory to all orms supported
 		 */
-		if(orm.equals("jpa")) {
+		if(generatorOptions.getOrm().equals("jpa")) {
 			javaStrings = javaStrings.replace("${jpa_config}", ConfigProps.JPA_CONFIG);
 		}
 		
 		/**
 		 * TODO: factory to all server supported
 		 */
-		if (server.equals("tomcat")) {
+		if (generatorOptions.getServer().equals("tomcat")) {
 			javaStrings = javaStrings.replace("${server_config}", ConfigProps.TOMCAT_CONFIG);
 		}
 		
 		try {
 			javaStrings = javaStrings.replace("${database_name}", getNameDatabase())
-					.replace("${database}", database)
+					.replace("${database}", generatorOptions.getDatabase())
 					.replace("${user_database}", getUserDatabase())
 					.replace("${password_database}", getPassWordDatabase());
 		} catch (IOException e) {

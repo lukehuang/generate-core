@@ -1,7 +1,9 @@
 package br.com.netodevel.core;
 
+import br.com.netodevel.helpers.TextHelper;
+
 /**
- * @author neto
+ * @author NetoDevel
  */
 public class GeneratorOptions {
 
@@ -27,6 +29,14 @@ public class GeneratorOptions {
 		return this;
 	}
 
+	public String getOrm(String defValue) {
+		if (TextHelper.isTextNull(this.orm)) {
+			return defValue;
+		} else {
+			return this.orm;
+		}
+	}
+	
 	public String getDatabase() {
 		return database;
 	}
@@ -48,6 +58,14 @@ public class GeneratorOptions {
 		return this;
 	}
 
+	public String getUserDatabase(String defValue) {
+		if (TextHelper.isTextNull(this.userDatabase)) {
+			return defValue;
+		} else {
+			return this.userDatabase;
+		}
+	}
+	
 	public String getUserDatabase() {
 		return userDatabase;
 	}
@@ -57,6 +75,14 @@ public class GeneratorOptions {
 		return this;
 	}
 
+	public String getPasswordDatabase(String defValue) {
+		if (TextHelper.isTextNull(this.passwordDatabase)) {
+			return defValue;
+		} else {
+			return this.passwordDatabase;
+		}
+	}
+	
 	public String getPasswordDatabase() {
 		return passwordDatabase;
 	}

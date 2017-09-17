@@ -1,11 +1,12 @@
 package br.com.netodevel.generators.java.service;
 
 import br.com.netodevel.core.Generator;
+import br.com.netodevel.core.GeneratorOptions;
 
 public class GeneratorService extends Generator {
 	
-	public GeneratorService(String nameModel) {
-		super(nameModel);
+	public GeneratorService(GeneratorOptions generatorOptions) {
+		super(generatorOptions);
 	}
 
 	public String layer() {
@@ -21,13 +22,12 @@ public class GeneratorService extends Generator {
 	}
 
 	@Override
-	protected String operationGenerate(String javaStrings, String nameClass, String parameters) {
+	protected String operationGenerate(String javaStrings, GeneratorOptions generatorOptions) {
 		return javaStrings.replace("${package}", getPackage() + ".service")
 				.replace("${package_model}", getPackage() + ".model")
 				.replace("${package_repository}", getPackage() + ".repository")
-				.replace("${className}", nameClass)
-				.replace("${paramClassName}", nameClass.toLowerCase());
-
+				.replace("${className}", generatorOptions.getNameModel())
+				.replace("${paramClassName}", generatorOptions.getNameModel().toLowerCase());
 	}
 
 }

@@ -7,29 +7,20 @@ import java.io.IOException;
  */
 public abstract class Generator extends AbstractGenerator {
 	
-	private String nameModel;
-	private String parameters;
 	private String javaStrings;
+	private GeneratorOptions generateOptions;
 	
-	public Generator(String nameModel, String parameters) {
-		this.nameModel = nameModel;
-		this.parameters = parameters;
+	public Generator(GeneratorOptions generatorOptions) {
+		this.generateOptions = generatorOptions;
 	}
 	
-	public Generator(String nameModel) {
-		this.nameModel = nameModel;
-	}
-	
-	public Generator(){
-	}
-	
-	protected abstract String operationGenerate(String javaStrings, String nameClass, String parameters);
+	protected abstract String operationGenerate(String javaStrings, GeneratorOptions generatorOptions);
 	
 	public Generator generate() {
 		try {
 			this.javaStrings = loadTemplateFile(templateFile()); 
-			String replaceStrings = operationGenerate(this.javaStrings, this.nameModel, this.parameters);
-			createNewFile(replaceStrings, this.nameModel);
+			String replaceStrings = operationGenerate(this.javaStrings, this.generateOptions);
+			createNewFile(replaceStrings, this.generateOptions.getNameModel());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

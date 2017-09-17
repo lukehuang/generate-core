@@ -8,16 +8,16 @@ import java.io.IOException;
 public abstract class GeneratorResource extends AbstractGeneratorResource implements GeneratorResourceBase {
 	
 	public static final String ROOT = "";
-	protected GeneratorOptions generatorOptions;
+	protected GeneratorResourceOptions generatorOptions;
 	
 	public GeneratorResource() {
 	}
 	
-	public GeneratorResource(GeneratorOptions generatorOptions) {
+	public GeneratorResource(GeneratorResourceOptions generatorOptions) {
 		this.generatorOptions = generatorOptions;
 	}
 	
-	protected abstract String operationGenerate(String javaStrings, GeneratorOptions generateOptions);
+	protected abstract String operationGenerate(String javaStrings, GeneratorResourceOptions generateOptions);
 	
 	public void generate(String resourceName) {
 		try {

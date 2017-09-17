@@ -2,12 +2,12 @@ package br.com.netodevel.generators.resources;
 
 import java.io.IOException;
 
-import br.com.netodevel.core.GeneratorOptions;
+import br.com.netodevel.core.GeneratorResourceOptions;
 import br.com.netodevel.core.GeneratorResource;
 
 public class GeneratorApplicationProperties extends GeneratorResource {
 
-	public GeneratorApplicationProperties(GeneratorOptions generatorOptions) {
+	public GeneratorApplicationProperties(GeneratorResourceOptions generatorOptions) {
 		super(generatorOptions);
 	}
 
@@ -24,7 +24,7 @@ public class GeneratorApplicationProperties extends GeneratorResource {
 	}
 
 	@Override
-	protected String operationGenerate(String javaStrings, GeneratorOptions generatorOptions) {
+	protected String operationGenerate(String javaStrings, GeneratorResourceOptions generatorOptions) {
 		
 		/**
 		 * TODO: factory to all orms supported
@@ -53,7 +53,7 @@ public class GeneratorApplicationProperties extends GeneratorResource {
 	}
 	
 	public static void main(String[] args) {
-		GeneratorOptions options = new GeneratorOptions()
+		GeneratorResourceOptions options = new GeneratorResourceOptions()
 				.setDatabase("mysql")
 				.setOrm("jpa")
 				.setServer("tomcat");

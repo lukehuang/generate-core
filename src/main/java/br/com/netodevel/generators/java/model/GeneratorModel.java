@@ -1,14 +1,15 @@
 package br.com.netodevel.generators.java.model;
 
 import br.com.netodevel.core.Generator;
+import br.com.netodevel.core.GeneratorOptions;
 
 /**
  * @author NetoDevel
  */
 public class GeneratorModel extends Generator {
 
-	public GeneratorModel(String nameModel, String parameters) {
-		super(nameModel, parameters);
+	public GeneratorModel(GeneratorOptions generatorOptions) {
+		super(generatorOptions);
 	}
 
 	public String layer() {
@@ -24,13 +25,13 @@ public class GeneratorModel extends Generator {
 	}
 
 	@Override
-	protected String operationGenerate(String javaStrings, String nameClass, String parameters) {
+	protected String operationGenerate(String javaStrings, GeneratorOptions generatorOptions) {
 		return javaStrings.replace("${package}", getPackage() + ".model")
-				.replace("${imports}", ModelGenerateUtils.generateImports(parameters))
-				.replace("${className}", nameClass)
-				.replace("${name_table}", nameClass.toLowerCase() + "s")
-				.replace("${parameters}", ModelGenerateUtils.generateParams(parameters))
-				.replace("${getters}", ModelGenerateUtils.generateGettersAndSetters(parameters));
+				.replace("${imports}", ModelGenerateUtils.generateImports(generatorOptions.getParameters()))
+				.replace("${className}", generatorOptions.getNameModel())
+				.replace("${name_table}", generatorOptions.getNameModel().toLowerCase() + "s")
+				.replace("${parameters}", ModelGenerateUtils.generateParams(generatorOptions.getParameters()))
+				.replace("${getters}", ModelGenerateUtils.generateGettersAndSetters(generatorOptions.getParameters()));
 	}
 
 }

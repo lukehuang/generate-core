@@ -13,7 +13,7 @@ import org.apache.commons.io.IOUtils;
 public abstract class AbstractGeneratorResource extends ReadScaffoldInfo implements GeneratorResourceBase {
 	
 	public String loadTemplateFileResources(String fileName) throws IOException {
-		InputStream in = getClass().getResourceAsStream("/templates/resources/" + layer() + "/" + fileName);
+		InputStream in = getClass().getResourceAsStream("/templates/resources/" + layer() + GeneratorConstants.SEPARATOR_DIR + fileName);
 		String theString = IOUtils.toString(in, "UTF-8"); 
 		return theString;
 	}
@@ -27,7 +27,7 @@ public abstract class AbstractGeneratorResource extends ReadScaffoldInfo impleme
 	}
 
 	private String nameResourceToGenerate(String fileOutPutName, String folder) {
-		fileOutPutName = getPathResources() + "/" + folder() + "/" + fileOutPutName;
+		fileOutPutName = getPathResources() + GeneratorConstants.SEPARATOR_DIR + folder() + GeneratorConstants.SEPARATOR_DIR + fileOutPutName;
 		return fileOutPutName;
 	}
 	

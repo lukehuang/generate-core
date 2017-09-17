@@ -1,6 +1,6 @@
 package br.com.netodevel.generators.resources;
 
-import br.com.netodevel.core.GeneratorOptions;
+import br.com.netodevel.core.GeneratorResourceOptions;
 import br.com.netodevel.core.GeneratorResource;
 
 /**
@@ -12,7 +12,7 @@ public class GeneratorScaffoldInfo extends GeneratorResource {
 	private static final String DEFAULT_USER_DATABASE = "root";
 	private static final String DEFAULT_PASSWORD_DATABASE = "";
 
-	public GeneratorScaffoldInfo(GeneratorOptions generatorOptions) {
+	public GeneratorScaffoldInfo(GeneratorResourceOptions generatorOptions) {
 		super(generatorOptions);
 	}
 
@@ -29,7 +29,7 @@ public class GeneratorScaffoldInfo extends GeneratorResource {
 	}
 
 	@Override
-	protected String operationGenerate(String javaStrings, GeneratorOptions generatorOptions) {
+	protected String operationGenerate(String javaStrings, GeneratorResourceOptions generatorOptions) {
 		return javaStrings.replace("${package}", generatorOptions.getPackageName())
 				.replace("${database_name}", generatorOptions.getDatabase())
 				.replace("${user_database}", generatorOptions.getUserDatabase(DEFAULT_USER_DATABASE))
@@ -38,7 +38,7 @@ public class GeneratorScaffoldInfo extends GeneratorResource {
 	}
 	
 	public static void main(String[] args) {
-		GeneratorOptions options = new GeneratorOptions()
+		GeneratorResourceOptions options = new GeneratorResourceOptions()
 				.setDatabase("mysql")
 				.setPackageName("br.com.netodevel")
 				.setUserDatabase("root")

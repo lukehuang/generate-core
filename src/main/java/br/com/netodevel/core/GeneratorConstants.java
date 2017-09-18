@@ -10,4 +10,5 @@ public class GeneratorConstants {
 	public static final String ROOT = "";
 	public static final String FOLDER_THYMELEAF = "templates";
 	public static final String BREAK_LINE = "\n";
+	public static final String SPACE = " ";
 }

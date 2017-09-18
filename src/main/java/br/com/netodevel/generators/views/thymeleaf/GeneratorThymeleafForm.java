@@ -7,9 +7,9 @@ import br.com.netodevel.core.view.GeneratorViewOptions;
 /**
  * @author NetoDevel
  */
-public class GeneratorThymeleafCleanIndex extends GeneratorView {
+public class GeneratorThymeleafForm extends GeneratorView {
 
-	public GeneratorThymeleafCleanIndex(GeneratorViewOptions generatorViewOptions) {
+	public GeneratorThymeleafForm(GeneratorViewOptions generatorViewOptions) {
 		super(generatorViewOptions);
 	}
 
@@ -26,21 +26,25 @@ public class GeneratorThymeleafCleanIndex extends GeneratorView {
 
 	@Override
 	public String templateFile() {
-		return "template-clean-index.txt";
+		return "template-form.txt";
 	}
 
 	@Override
 	protected String operationGenerate(String javaStrings, GeneratorViewOptions generatorViewOptions) {
-		return javaStrings.replace("${template}",generatorViewOptions.getLayout())
-				.replace("${className}", generatorViewOptions.getNameModel());
+		return javaStrings.replace("${template}", generatorViewOptions.getLayout())
+				.replace("${className}", generatorViewOptions.getNameModel())
+				.replace("paramClassName", generatorViewOptions.getNameModel().toLowerCase())
+				.replace("${url_path}", GeneratorConstants.SEPARATOR_DIR + generatorViewOptions.getNameModel().toLowerCase() + "s")
+				.replace("${input_parameters}", AbstractThymeleafGenerate.generateInputParameters(generatorViewOptions.getParameters()));
 	}
 	
 	public static void main(String[] args) {
 		GeneratorViewOptions options = new GeneratorViewOptions()
+				.setLayout("layout")
 				.setNameModel("User")
-				.setLayout("layout");
+				.setParameters("email:String name:String idade:Integer");
 		
-		new GeneratorThymeleafCleanIndex(options).generate("index.html");
+		new GeneratorThymeleafForm(options).generate("form.html");
 	}
-
+	
 }

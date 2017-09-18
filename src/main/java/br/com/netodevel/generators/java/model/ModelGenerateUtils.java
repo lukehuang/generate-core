@@ -1,61 +1,36 @@
 package br.com.netodevel.generators.java.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.util.StringUtils;
 
+import br.com.netodevel.core.GeneratorConstants;
+
 /**
- * @author NetoDevel
+ * @author NetoDevel, IvanMarreta
  */
 public class ModelGenerateUtils {
-	
+
 	private final static String TAB = " ";
-	
-	private String importVariable;
-	private String nameVariable;
-	
-	public ModelGenerateUtils(String importVariable, String nameVariable) {
-		super();
-		this.setImportVariable(importVariable);
-		this.setNameVariable(nameVariable);
-	}
-	
-	public ModelGenerateUtils(){
-	}
-	
-	public static List<ModelGenerateUtils> listGenerateImports() {
-		return Arrays.asList(
-				new ModelGenerateUtils("java.lang.String", "String"),
-				new ModelGenerateUtils("java.lang.Integer", "Integer"),
-				new ModelGenerateUtils("java.lang.Double", "Double"),
-				new ModelGenerateUtils("java.lang.Float", "Float"),
-				new ModelGenerateUtils("java.lang.Long", "Long"),
-				new ModelGenerateUtils("java.lang.Short", "Short"),
-				new ModelGenerateUtils("java.lang.Byte", "Byte"),
-				new ModelGenerateUtils("java.lang.Char", "Char"),
-				new ModelGenerateUtils("java.lang.Boolean", "Boolean"),
-				new ModelGenerateUtils("java.lang.Object", "Object"),
-				new ModelGenerateUtils("java.util.Date", "Date"),
-				new ModelGenerateUtils("java.math.BigDecimal", "BigDecimal"));
-	}
-	
+
 	public static String generateImports(String parameters) {
 		String[] separator = parameters.split(" ");
-		String imports = "";
-		for (int i = 0; i < separator.length; i++) {
-			String [] nameAndType = separator[i].split(":");
+		List<String> parametersList = new ArrayList<String>(Arrays.asList(separator));
 
-			for (int j = 0; j < listGenerateImports().size(); j++) {
-				if (nameAndType[1].equals(listGenerateImports().get(j).getNameVariable())) {
-					imports += "import " + listGenerateImports().get(j).getImportVariable() + "; \n";
-				}
-			}
-			
-		}
-		return imports;
+		String result = parametersList.stream()
+						.map(ModelGenerateUtils::getTypeParam)
+						.collect(Collectors.joining("\n"));
+		return result;
 	}
 	
+	public static String getTypeParam(String param) {
+		String [] type = param.split(":");
+		return VariableTypeImport.valueOf(type[1].toUpperCase()).path();
+	}
+
 	public static String generateGettersAndSetters(String parameters) {
 		String[] separator = parameters.split(" ");
 		String gettersAndSetters = "";
@@ -63,25 +38,25 @@ public class ModelGenerateUtils {
 			String [] nameAndType = separator[i].split(":");
 			String name = nameAndType[0];
 			String type = nameAndType[1];
-			
+
 			//SETTER
 			gettersAndSetters += TAB + "public void set" + StringUtils.capitalize(name) + "(" + type + " " + name + ") {" ;
 			gettersAndSetters += "this." + name + " = " + name + ";";
 			gettersAndSetters += "}";
-			
-			gettersAndSetters += "\n";
-			
+
+			gettersAndSetters += GeneratorConstants.BREAK_LINE;
+
 			//GETTER
 			gettersAndSetters += TAB + "public " + type + " get" + StringUtils.capitalize(name) + "() {" ;
 			gettersAndSetters += "return " + name + ";";
 			gettersAndSetters += "}";
-			
-			gettersAndSetters += "\n";
+
+			gettersAndSetters += GeneratorConstants.BREAK_LINE;
 		}
 		return gettersAndSetters;
 	}
 
-	
+
 	public static String generateParams(String params) {
 		String[] variablesSplits = params.split(" ");
 		String finalParameters = "";
@@ -91,7 +66,7 @@ public class ModelGenerateUtils {
 
 			String column = "    @Column(name = \"" + typeAndNameVars[0] + "\")";
 			String lineVariables = "    private " + typeAndNameVars[1] + " " + typeAndNameVars[0] + ";";
-			String lineClean = "\n";
+			String lineClean = GeneratorConstants.BREAK_LINE;
 
 			finalParameters += lineClean;
 			finalParameters += column;
@@ -101,21 +76,5 @@ public class ModelGenerateUtils {
 		}
 		return finalParameters;
 	}
-	
-	public String getNameVariable() {
-		return nameVariable;
-	}
 
-	public void setNameVariable(String nameVariable) {
-		this.nameVariable = nameVariable;
-	}
-
-	public String getImportVariable() {
-		return importVariable;
-	}
-
-	public void setImportVariable(String importVariable) {
-		this.importVariable = importVariable;
-	}
-	
 }

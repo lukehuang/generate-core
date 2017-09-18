@@ -33,5 +33,14 @@ public class GeneratorModel extends GeneratorSource {
 				.replace("${parameters}", ModelGenerateUtils.generateParams(generatorOptions.getParameters()))
 				.replace("${getters}", ModelGenerateUtils.generateGettersAndSetters(generatorOptions.getParameters()));
 	}
+	
+	public static void main(String[] args) {
+		GeneratorOptions options = new GeneratorOptions()
+				.setNameModel("User")
+				.setParameters("name:String idade:Integer date:Date");
+		
+		
+		new GeneratorModel(options).generate();		
+	}
 
 }

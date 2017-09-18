@@ -1,9 +1,9 @@
 package br.com.netodevel.generators.java.service;
 
-import br.com.netodevel.core.Generator;
-import br.com.netodevel.core.GeneratorOptions;
+import br.com.netodevel.core.source.GeneratorOptions;
+import br.com.netodevel.core.source.GeneratorSource;
 
-public class GeneratorCleanService extends Generator {
+public class GeneratorCleanService extends GeneratorSource {
 
 	public GeneratorCleanService(GeneratorOptions generatorOptions) {
 		super(generatorOptions);

@@ -1,4 +1,4 @@
-package br.com.netodevel.core;
+package br.com.netodevel.core.resources;
 
 import br.com.netodevel.helpers.TextHelper;
 

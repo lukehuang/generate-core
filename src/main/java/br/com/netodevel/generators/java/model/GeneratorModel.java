@@ -1,12 +1,12 @@
 package br.com.netodevel.generators.java.model;
 
-import br.com.netodevel.core.Generator;
-import br.com.netodevel.core.GeneratorOptions;
+import br.com.netodevel.core.source.GeneratorOptions;
+import br.com.netodevel.core.source.GeneratorSource;
 
 /**
  * @author NetoDevel
  */
-public class GeneratorModel extends Generator {
+public class GeneratorModel extends GeneratorSource {
 
 	public GeneratorModel(GeneratorOptions generatorOptions) {
 		super(generatorOptions);

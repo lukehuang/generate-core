@@ -1,4 +1,4 @@
-package br.com.netodevel.core;
+package br.com.netodevel.core.source;
 
 /**
  * @author NetoDevel
@@ -6,11 +6,8 @@ package br.com.netodevel.core;
 public interface GeneratorBase {
 	
 	public String language();
-	
 	public String layer();
-	
 	public String packageName();
-	
 	public String templateFile();
 	
 }

@@ -1,22 +1,22 @@
-package br.com.netodevel.core;
+package br.com.netodevel.core.source;
 
 import java.io.IOException;
 
 /**
  * @author NetoDevel
  */
-public abstract class Generator extends AbstractGenerator {
+public abstract class GeneratorSource extends AbstractGenerator {
 	
 	private String javaStrings;
 	private GeneratorOptions generateOptions;
 	
-	public Generator(GeneratorOptions generatorOptions) {
+	public GeneratorSource(GeneratorOptions generatorOptions) {
 		this.generateOptions = generatorOptions;
 	}
 	
 	protected abstract String operationGenerate(String javaStrings, GeneratorOptions generatorOptions);
 	
-	public Generator generate() {
+	public GeneratorSource generate() {
 		try {
 			this.javaStrings = loadTemplateFile(templateFile()); 
 			String replaceStrings = operationGenerate(this.javaStrings, this.generateOptions);

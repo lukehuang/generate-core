@@ -2,8 +2,8 @@ package br.com.netodevel.generators.resources;
 
 import java.io.IOException;
 
-import br.com.netodevel.core.GeneratorResourceOptions;
-import br.com.netodevel.core.GeneratorResource;
+import br.com.netodevel.core.resources.GeneratorResource;
+import br.com.netodevel.core.resources.GeneratorResourceOptions;
 
 public class GeneratorApplicationProperties extends GeneratorResource {
 

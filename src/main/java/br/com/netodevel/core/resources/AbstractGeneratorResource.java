@@ -1,4 +1,4 @@
-package br.com.netodevel.core;
+package br.com.netodevel.core.resources;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,6 +6,9 @@ import java.io.InputStream;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+
+import br.com.netodevel.core.GeneratorConstants;
+import br.com.netodevel.core.ReadScaffoldInfo;
 
 /**
  * @author NetoDevel
@@ -27,7 +30,10 @@ public abstract class AbstractGeneratorResource extends ReadScaffoldInfo impleme
 	}
 
 	private String nameResourceToGenerate(String fileOutPutName, String folder) {
-		fileOutPutName = getPathResources() + GeneratorConstants.SEPARATOR_DIR + folder() + GeneratorConstants.SEPARATOR_DIR + fileOutPutName;
+		fileOutPutName = getPathResources() + GeneratorConstants.SEPARATOR_DIR 
+						+ folder() + GeneratorConstants.SEPARATOR_DIR 
+						+ fileOutPutName;
+		
 		return fileOutPutName;
 	}
 	

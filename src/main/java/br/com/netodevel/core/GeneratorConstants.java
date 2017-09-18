@@ -7,5 +7,5 @@ public class GeneratorConstants {
 
 	public static final String SEPARATOR_PACKAGE = ".";
 	public static final String SEPARATOR_DIR = "/";
-	
+	public static final String ROOT = "";
 }

@@ -1,7 +1,7 @@
 package br.com.netodevel.generators.resources;
 
-import br.com.netodevel.core.GeneratorResourceOptions;
-import br.com.netodevel.core.GeneratorResource;
+import br.com.netodevel.core.resources.GeneratorResource;
+import br.com.netodevel.core.resources.GeneratorResourceOptions;
 
 /**
  * @author NetoDevel

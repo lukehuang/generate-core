@@ -1,4 +1,4 @@
-package br.com.netodevel.core;
+package br.com.netodevel.core.source;
 
 /**
  * @author NetoDevel

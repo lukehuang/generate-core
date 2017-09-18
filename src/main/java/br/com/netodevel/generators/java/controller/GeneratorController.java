@@ -1,9 +1,9 @@
 package br.com.netodevel.generators.java.controller;
 
-import br.com.netodevel.core.Generator;
-import br.com.netodevel.core.GeneratorOptions;
+import br.com.netodevel.core.source.GeneratorOptions;
+import br.com.netodevel.core.source.GeneratorSource;
 
-public class GeneratorController extends Generator {
+public class GeneratorController extends GeneratorSource {
 
 	public GeneratorController(GeneratorOptions generatorOptions) {
 		super(generatorOptions);

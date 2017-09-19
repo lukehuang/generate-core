@@ -24,7 +24,7 @@ public abstract class GeneratorResource extends AbstractGeneratorResource implem
 			String javaStrings = loadTemplateFileResources(templateFile());
 			String replaceStrings = operationGenerate(javaStrings, this.generatorOptions);
 			
-			createNewResource(replaceStrings, resourceName, folder());
+			createNewResource(replaceStrings, resourceName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 

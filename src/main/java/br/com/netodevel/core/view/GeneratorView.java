@@ -22,7 +22,7 @@ public abstract class GeneratorView extends AbstractGeneratorResource {
 			String javaStrings = loadTemplateFileResources(templateFile());
 			String replaceStrings = operationGenerate(javaStrings, this.generatorViewOptions);
 			
-			createNewResource(replaceStrings, resourceName, folder());
+			createNewResource(replaceStrings, resourceName);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} 

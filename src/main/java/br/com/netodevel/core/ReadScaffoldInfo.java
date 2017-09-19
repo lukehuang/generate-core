@@ -12,11 +12,12 @@ import org.apache.commons.lang.SystemUtils;
 /**
  * @author NetoDevel 
  */
-public abstract class ReadScaffoldInfo {
+public class ReadScaffoldInfo {
 	
+	private static final String SRC_MAIN_RESOURCES = "src/main/resources/";
+
 	public FileReader getArq() throws FileNotFoundException{
-		FileReader arq = new FileReader(getUserDir() + "/src/main/resources/scaffold.info");
-		return arq;
+		return new FileReader(getUserDir() + "/src/main/resources/scaffold.info");
 	}
 	
 	public String getUserDir() {
@@ -39,8 +40,6 @@ public abstract class ReadScaffoldInfo {
 			String row = readArq.readLine();
 			String[] valuesPackage = row.split(":");
 			return valuesPackage[1];
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -48,12 +47,11 @@ public abstract class ReadScaffoldInfo {
 	}
 	
 	public String getPathPackage() {
-		String pathPackage = "src/main/java/" + getPackage().replace(".", "/") + "/";
-		return pathPackage;
+		return "src/main/java/" + getPackage().replace(".", "/") + "/";
 	}
 	
 	public String getPathResources() {
-		return "src/main/resources/";
+		return SRC_MAIN_RESOURCES;
 	}
 	
 	public String getUserDatabase() throws IOException {

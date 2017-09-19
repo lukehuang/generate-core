@@ -17,19 +17,18 @@ public abstract class AbstractGeneratorResource extends ReadScaffoldInfo impleme
 	
 	public String loadTemplateFileResources(String fileName) throws IOException {
 		InputStream in = getClass().getResourceAsStream("/templates/resources/" + layer() + GeneratorConstants.SEPARATOR_DIR + fileName);
-		String theString = IOUtils.toString(in, "UTF-8"); 
-		return theString;
+		return IOUtils.toString(in, "UTF-8"); 
 	}
 	
-	public void createNewResource(String javaStrings, String fileOutPutName, String folder) throws IOException {
-		fileOutPutName = nameResourceToGenerate(fileOutPutName, folder);
+	public void createNewResource(String javaStrings, String fileOutPutName) throws IOException {
+		fileOutPutName = nameResourceToGenerate(fileOutPutName);
 
 		File newJavaFile = new File(fileOutPutName);
 		FileUtils.writeStringToFile(newJavaFile, javaStrings);
 		System.out.println("created");
 	}
 
-	private String nameResourceToGenerate(String fileOutPutName, String folder) {
+	private String nameResourceToGenerate(String fileOutPutName) {
 		fileOutPutName = getPathResources() + GeneratorConstants.SEPARATOR_DIR 
 						+ folder() + GeneratorConstants.SEPARATOR_DIR 
 						+ fileOutPutName;

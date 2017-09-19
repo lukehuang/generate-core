@@ -10,12 +10,13 @@ import org.springframework.util.StringUtils;
 import br.com.netodevel.core.GeneratorConstants;
 
 /**
- * @author NetoDevel, IvanMarreta
+ * @author NetoDevel
+ * @author IvanMarreta
  */
 public class ModelGenerateUtils {
 
 	public static String generateImports(String parameters) {
-		String[] separator = parameters.split(GeneratorConstants.SPACE);
+		String[] separator = extractParameter(parameters);
 		List<String> parametersList = new ArrayList<String>(Arrays.asList(separator));
 
 		String result = parametersList.stream()
@@ -25,27 +26,37 @@ public class ModelGenerateUtils {
 	}
 
 	public static String generateGettersAndSetters(String parameters) {
-		String[] separator = parameters.split(GeneratorConstants.SPACE);
+		String[] separator = extractParameter(parameters);
 		List<String> parametersList = new ArrayList<String>(Arrays.asList(separator));
 
 		String result = parametersList.stream()
-					  				  .map(ModelGenerateUtils::generateGetterAndSetters)
-					  				  .collect(Collectors.joining());
+	  				    .map(ModelGenerateUtils::generateGetterAndSetters)
+	  				    .collect(Collectors.joining());
 		return result;
 	}
 	
 	public static String generateParams(String params) {
-		String[] variablesSplits = params.split(GeneratorConstants.SPACE);
+		String[] variablesSplits = extractParameter(params);
 		List<String> parametersList = new ArrayList<String>(Arrays.asList(variablesSplits));
 			
 		String result = parametersList.stream()
-				.map(ModelGenerateUtils::generateAttribute)
-				.collect(Collectors.joining(GeneratorConstants.BREAK_LINE));
+						.map(ModelGenerateUtils::generateAttribute)
+						.collect(Collectors.joining(GeneratorConstants.BREAK_LINE));
 		return result;
 	}
 	
-	public static String generateGetterAndSetters(String param) {
+	private static String[] extractParameter(String parameters) {
+		String[] separator = parameters.split(GeneratorConstants.SPACE);
+		return separator;
+	}
+	
+	private static String[] extractNameAndType(String param) {
 		String [] nameAndType = param.split(":");
+		return nameAndType;
+	}
+	
+	public static String generateGetterAndSetters(String param) {
+		String[] nameAndType = extractNameAndType(param);
 
 		String name = nameAndType[0];
 		String type = nameAndType[1];
@@ -55,50 +66,32 @@ public class ModelGenerateUtils {
 		
 		return setter + getter;
 	}
-	
+
 	public static String getTypeParam(String param) {
-		String [] type = param.split(":");
+		String[] type = extractNameAndType(param);
 		return VariableTypeImport.valueOf(type[1].toUpperCase()).path();
 	}
 
 	private static String buildGetter(String name, String type) {
-		StringBuilder builderGetter = new StringBuilder();
-		builderGetter.append("\t ");
-		builderGetter.append("public ");
-		builderGetter.append(type);
-		builderGetter.append(" get");
-		builderGetter.append(StringUtils.capitalize(name));
-		builderGetter.append("() {");
-		builderGetter.append("return ");
-		builderGetter.append(name);
-		builderGetter.append(";");
-		builderGetter.append("}");
-		builderGetter.append(GeneratorConstants.BREAK_LINE);
-		return builderGetter.toString();
+		String attribute = StringUtils.capitalize(name);
+
+		String code = "\n\t public " + type + " get" + attribute + "() {\n" 
+				      + "\t\t return this." + name + ";\n"
+				      + "\t }\n";
+		return code;
 	}
 
 	private static String buildSetter(String name, String type) {
-		StringBuilder builderSetter = new StringBuilder();
-		builderSetter.append("\t ");
-		builderSetter.append("public void set");
-		builderSetter.append(StringUtils.capitalize(name));
-		builderSetter.append("(");
-		builderSetter.append(type);
-		builderSetter.append(GeneratorConstants.SPACE);
-		builderSetter.append(name);
-		builderSetter.append(") {");
-		builderSetter.append("this.");
-		builderSetter.append(name);
-		builderSetter.append(" = ");
-		builderSetter.append(name);
-		builderSetter.append(";");
-		builderSetter.append("}");
-		builderSetter.append(GeneratorConstants.BREAK_LINE);
-		return builderSetter.toString();
+		String attribute = StringUtils.capitalize(name);
+
+		String code = "\n\t public void set" + attribute + "(" + type + " " + name + ") {\n"
+					  + "\t\t this." + name + " = " + name + ";\n"
+					  + "\t }\n";
+		return code;
 	}
 	
 	public static String generateAttribute(String param) {
-		String [] splitParam = param.split(":");
+		String[] splitParam = extractNameAndType(param);
 		
 		String name = splitParam[0];
 		String type = splitParam[1];
@@ -106,28 +99,18 @@ public class ModelGenerateUtils {
 		String column = buildColumn(name);
 		String attribute = buildAttribute(name, type);
 		
-		String result = column + GeneratorConstants.SPACE 
-						+ attribute + GeneratorConstants.BREAK_LINE;
+		String result = column + attribute;
 		return result;
 	}
 
 	private static String buildAttribute(String name, String type) {
-		StringBuilder buildAttribute = new StringBuilder();
-		buildAttribute.append("\t private ");
-		buildAttribute.append(type);
-		buildAttribute.append(GeneratorConstants.SPACE);
-		buildAttribute.append(name);
-		buildAttribute.append(";");
-		return buildAttribute.toString();
+		String code = "\t private " + type + GeneratorConstants.SPACE + name + ";\n";
+		return code;
 	}
 
 	private static String buildColumn(String name) {
-		StringBuilder buildColumn = new StringBuilder();
-		buildColumn.append("\t @Column(name = \"");
-		buildColumn.append(name);
-		buildColumn.append("\")");
-		buildColumn.append(GeneratorConstants.BREAK_LINE);
-		return buildColumn.toString();
+		String code = "\t @column(name=\"" + name + "\")\n";
+		return code;
 	}
 	
 	public static void main(String[] args) {

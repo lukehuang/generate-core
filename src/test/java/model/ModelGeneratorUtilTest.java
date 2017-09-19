@@ -23,4 +23,28 @@ public class ModelGeneratorUtilTest {
 		assertEquals(valueExpected, ModelGenerateUtils.generateImports(parameters));
 	}
 	
+	@Test
+	public void testGenerateGettersAndSetters() {
+		String setter = "\n\t public void setName(String name) {\n"
+				  + "\t\t this.name = name;\n"
+				  + "\t }\n";
+		
+		String getter = "\n\t public String getName() {\n" 
+			      + "\t\t return this.name;\n"
+			      + "\t }\n";
+		
+		String valueExpected = setter + getter;
+		assertEquals(valueExpected, ModelGenerateUtils.generateGettersAndSetters("name:String"));
+	}
+	
+	@Test
+	public void testGenerateParams() {
+		String column = "\t @column(name=\"name\")\n";
+		String attribute = "\t private String name;\n";
+		
+		String valueExpected = column + attribute;
+		assertEquals(valueExpected, ModelGenerateUtils.generateParams("name:String"));
+
+	}
+	
 }

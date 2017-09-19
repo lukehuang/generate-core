@@ -8,6 +8,12 @@ import br.com.netodevel.core.GeneratorConstants;
 
 public class ParametersHelper {
 
+	public static List<String> extractParametersList(String parameters) {
+		String[] separator = ParametersHelper.extractParameter(parameters);
+		List<String> parametersList = ParametersHelper.convertToList(separator);
+		return parametersList;
+	}
+	
 	public static String[] extractParameter(String parameters) {
 		String[] separator = parameters.split(GeneratorConstants.SPACE);
 		return separator;

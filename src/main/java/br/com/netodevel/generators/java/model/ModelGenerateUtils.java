@@ -1,12 +1,15 @@
 package br.com.netodevel.generators.java.model;
 
+import static br.com.netodevel.helpers.ParametersHelper.extractNameAndType;
+import static br.com.netodevel.helpers.ParametersHelper.extractParametersList;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.util.StringUtils;
 
 import br.com.netodevel.core.GeneratorConstants;
-import br.com.netodevel.helpers.ParametersHelper;
+
 
 /**
  * @author NetoDevel
@@ -15,39 +18,31 @@ import br.com.netodevel.helpers.ParametersHelper;
 public class ModelGenerateUtils {
 
 	public static String generateImports(String parameters) {
-		String[] separator = ParametersHelper.extractParameter(parameters);
-		List<String> parametersList = ParametersHelper.convertToList(separator);
-
-		String result = parametersList.stream()
-						.map(ModelGenerateUtils::getTypeParam)
-						.collect(Collectors.joining("\n"));
-		return result;
+		List<String> parametersList = extractParametersList(parameters);
+		
+		return parametersList.stream()
+				.map(ModelGenerateUtils::getTypeParam)
+				.collect(Collectors.joining("\n"));
 	}
 
 	public static String generateGettersAndSetters(String parameters) {
-		String[] separator = ParametersHelper.extractParameter(parameters);
-		List<String> parametersList = ParametersHelper.convertToList(separator);
+		List<String> parametersList = extractParametersList(parameters);
 		
-		String result = parametersList.stream()
-						.map(ModelGenerateUtils::generateGetterAndSetters)
-						.collect(Collectors.joining());
-		return result;
+		return parametersList.stream()
+				.map(ModelGenerateUtils::generateGetterAndSetters)
+				.collect(Collectors.joining());
 	}
 	
 	public static String generateParams(String params) {
-		String[] variablesSplits = ParametersHelper.extractParameter(params);
-		List<String> parametersList = ParametersHelper.convertToList(variablesSplits);
+		List<String> parametersList = extractParametersList(params);
 			
-		String result = parametersList.stream()
-						.map(ModelGenerateUtils::generateAttribute)
-						.collect(Collectors.joining(GeneratorConstants.BREAK_LINE));
-		return result;
+		return parametersList.stream()
+				.map(ModelGenerateUtils::generateAttribute)
+				.collect(Collectors.joining(GeneratorConstants.BREAK_LINE));
 	}
 	
-	
-	
 	public static String generateGetterAndSetters(String param) {
-		String[] nameAndType = ParametersHelper.extractNameAndType(param);
+		String[] nameAndType = extractNameAndType(param);
 
 		String name = nameAndType[0];
 		String type = nameAndType[1];
@@ -59,7 +54,7 @@ public class ModelGenerateUtils {
 	}
 
 	public static String getTypeParam(String param) {
-		String[] type = ParametersHelper.extractNameAndType(param);
+		String[] type = extractNameAndType(param);
 		return VariableTypeImport.valueOf(type[1].toUpperCase()).path();
 	}
 
@@ -82,7 +77,7 @@ public class ModelGenerateUtils {
 	}
 	
 	public static String generateAttribute(String param) {
-		String[] splitParam = ParametersHelper.extractNameAndType(param);
+		String[] splitParam = extractNameAndType(param);
 		
 		String name = splitParam[0];
 		String type = splitParam[1];

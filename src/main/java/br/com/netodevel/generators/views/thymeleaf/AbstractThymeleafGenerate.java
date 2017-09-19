@@ -1,8 +1,12 @@
 package br.com.netodevel.generators.views.thymeleaf;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.util.StringUtils;
 
 import br.com.netodevel.core.ReadScaffoldInfo;
+import br.com.netodevel.helpers.ParametersHelper;
 
 /**
  * @author NetoDevel
@@ -12,18 +16,25 @@ public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 	private static final String TABS_INDEX = "					";
 	private static final String TABS_FORM = "				";
 	private static final String TABS_SHOW = "		";
-
+	
 	public String generateThParameters(String parameters) {
-		String [] params = parameters.split(" ");
-		String thParameters = "";
+		String [] params = ParametersHelper.extractParameter(parameters);
+		List<String> listParameters = ParametersHelper.convertToList(params);
 		
-		for (int i = 0; i < params.length; i++) {
-			String [] nameAndType = params[i].split(":");
-			thParameters += TABS_INDEX + "<th>" + StringUtils.capitalize(nameAndType[0]) + "</th> \n";
-		}
+		String result = listParameters.stream()
+					  .map(this::generateTh)
+					  .collect(Collectors.joining());
+		
+		String thAction = "\t\t\t <th>Action</th>";
+		return result + thAction;
+	}
+	
+	public String generateTh(String param) {
+		String[] paramSplit = param.split(":");
+		String name = StringUtils.capitalize(paramSplit[0]);
 
-		thParameters += TABS_INDEX + "<th>Action</th>";
-		return thParameters;
+		String code = "\t\t\t <th>" + name + "</th> \n";
+		return code;
 	}
 	
 	public String generateTdParameters(String className, String parameters) {
@@ -68,6 +79,11 @@ public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 			inputParameters += TABS_SHOW + "</div> \n";
 		}
 		return inputParameters;
+	}
+	
+	public static void main(String[] args) {
+		AbstractThymeleafGenerate g = new AbstractThymeleafGenerate();
+		System.out.println(g.generateThParameters("name:String idade:Integer date:Date"));
 	}
 	
 }

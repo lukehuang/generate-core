@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.util.StringUtils;
 
+import br.com.netodevel.core.Attribute;
 import br.com.netodevel.core.ReadScaffoldInfo;
 import br.com.netodevel.helpers.ParametersHelper;
 
@@ -13,7 +14,6 @@ import br.com.netodevel.helpers.ParametersHelper;
  */
 public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 	
-	private static final String TABS_INDEX = "					";
 	private static final String TABS_FORM = "				";
 	private static final String TABS_SHOW = "		";
 	
@@ -29,6 +29,12 @@ public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 		return result + thAction;
 	}
 	
+	/**
+	 * Code Result:
+	 *   <th> Name </th>
+	 * @param param
+	 * @return
+	 */
 	public String generateTh(String param) {
 		String[] paramSplit = param.split(":");
 		String name = StringUtils.capitalize(paramSplit[0]);
@@ -38,19 +44,46 @@ public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 	}
 	
 	public String generateTdParameters(String className, String parameters) {
-		String [] params = parameters.split(" ");
-		String tdParameters = "";
-		for (int i = 0; i < params.length; i++) {
-			String [] nameAndType = params[i].split(":");
-			tdParameters += TABS_INDEX + "<td th:text=\"${" + className.toLowerCase() + "." + nameAndType[0] + "}\"></td> \n";
-		}
+		String [] params = ParametersHelper.extractParameter(parameters);
+		List<String> listParameters = ParametersHelper.convertToList(params);
+
+		String result = listParameters.stream()
+				  .map(param -> generateTd(className, param))
+				  .collect(Collectors.joining());
 		
-		tdParameters += TABS_INDEX + "<td>\n";
-		tdParameters += TABS_INDEX + "		<a th:href=\"@{/"+ className.toLowerCase() + "s/{id}(id = " + "${" + className.toLowerCase() + ".id}" + ")}\">Show</a> \n";
-		tdParameters += TABS_INDEX + " 		<a th:href=\"@{/"+ className.toLowerCase() + "s/{id}/edit(id = " + "${" + className.toLowerCase() + ".id}" + ")}\">Edit</a> \n";
-		tdParameters += TABS_INDEX + "		<a href=\"#\">Destroy</a> \n";
-		tdParameters += TABS_INDEX + "</td>";
-		return tdParameters;
+		return result + generateTdLinks(className);
+	}
+	
+	/**
+	 * Code Result:
+	 * 	 <td th:text="${user.name}"></td> 
+	 * @param className
+	 * @param parameters
+	 * @return
+	 */
+	public static String generateTd(String className, String parameters) {
+		Attribute attribute = ParametersHelper.extractNameAndType(parameters);
+		String code = "<td th:text=\"${" + className.toLowerCase() + "." + attribute.getName() + "}\"></td> \n";
+		return code;
+	}
+	
+	/**
+	 * Code Result:
+	 * 	<td>
+	 * 		 <a th:href="@{/users/{id}(id = ${user.id})}">Show</a> 
+     *		 <a th:href="@{/users/{id}/edit(id = ${user.id})}">Edit</a> 
+     *		 <a href="#">Destroy</a> 
+     *	</td>
+	 * @param className
+	 * @return
+	 */
+	public static String generateTdLinks(String className) {
+		String code = "<td>\n"
+							+ "  <a th:href=\"@{/"+ className.toLowerCase() + "s/{id}(id = " + "${" + className.toLowerCase() + ".id}" + ")}\">Show</a> \n"
+							+ "  <a th:href=\"@{/"+ className.toLowerCase() + "s/{id}/edit(id = " + "${" + className.toLowerCase() + ".id}" + ")}\">Edit</a> \n"
+							+ "  <a href=\"#\">Destroy</a> \n"
+					+ "</td>";
+		return code;
 	}
 
 	public static String generateInputParameters(String parameters) {
@@ -83,7 +116,7 @@ public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 	
 	public static void main(String[] args) {
 		AbstractThymeleafGenerate g = new AbstractThymeleafGenerate();
-		System.out.println(g.generateThParameters("name:String idade:Integer date:Date"));
+		System.out.println(g.generateTdParameters("User", "name:String email:String"));
 	}
 	
 }

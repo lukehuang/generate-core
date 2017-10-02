@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 
 import org.springframework.util.StringUtils;
 
+import br.com.netodevel.core.Attribute;
 import br.com.netodevel.core.GeneratorConstants;
-import br.com.netodevel.helpers.ParametersHelper.Attribute;
 
 
 /**

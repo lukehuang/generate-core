@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import br.com.netodevel.core.Attribute;
 import br.com.netodevel.core.GeneratorConstants;
 
 /**
@@ -14,8 +15,7 @@ public class ParametersHelper {
 
 	public static List<String> extractParametersList(String parameters) {
 		String[] separator = ParametersHelper.extractParameter(parameters);
-		List<String> parametersList = ParametersHelper.convertToList(separator);
-		return parametersList;
+		return ParametersHelper.convertToList(separator);
 	}
 	
 	public static String[] extractParameter(String parameters) {
@@ -32,30 +32,4 @@ public class ParametersHelper {
 		return new Attribute(nameAndType[0], nameAndType[1]);
 	}
 	
-	public static class Attribute {
-		
-		public String name;
-		public String type;
-
-		public Attribute(){
-		}
-		
-		public Attribute(String name, String type) {
-			super();
-			this.name = name;
-			this.type = type;
-		}
-		public String getName() {
-			return name;
-		}
-		public void setName(String name) {
-			this.name = name;
-		}
-		public String getType() {
-			return type;
-		}
-		public void setType(String type) {
-			this.type = type;
-		}
-	}
 }

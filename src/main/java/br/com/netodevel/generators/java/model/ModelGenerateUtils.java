@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.util.StringUtils;
 
 import br.com.netodevel.core.GeneratorConstants;
+import br.com.netodevel.helpers.ParametersHelper.Attribute;
 
 
 /**
@@ -42,20 +43,17 @@ public class ModelGenerateUtils {
 	}
 	
 	public static String generateGetterAndSetters(String param) {
-		String[] nameAndType = extractNameAndType(param);
+		Attribute attribute = extractNameAndType(param);
 
-		String name = nameAndType[0];
-		String type = nameAndType[1];
-
-		String setter = buildSetter(name, type);
-		String getter = buildGetter(name, type);
+		String setter = buildSetter(attribute.getName(), attribute.getType());
+		String getter = buildGetter(attribute.getName(), attribute.getType());
 		
 		return setter + getter;
 	}
 
 	public static String getTypeParam(String param) {
-		String[] type = extractNameAndType(param);
-		return VariableTypeImport.valueOf(type[1].toUpperCase()).path();
+		Attribute attribute = extractNameAndType(param);
+		return VariableTypeImport.valueOf(attribute.getType().toUpperCase()).path();
 	}
 
 	private static String buildGetter(String name, String type) {
@@ -77,13 +75,10 @@ public class ModelGenerateUtils {
 	}
 	
 	public static String generateAttribute(String param) {
-		String[] splitParam = extractNameAndType(param);
-		
-		String name = splitParam[0];
-		String type = splitParam[1];
+		Attribute attributeObj = extractNameAndType(param);
 
-		String column = buildColumn(name);
-		String attribute = buildAttribute(name, type);
+		String column = buildColumn(attributeObj.getName());
+		String attribute = buildAttribute(attributeObj.getName(), attributeObj.getType());
 		
 		String result = column + attribute;
 		return result;

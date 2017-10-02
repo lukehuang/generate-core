@@ -6,6 +6,10 @@ import java.util.List;
 
 import br.com.netodevel.core.GeneratorConstants;
 
+/**
+ * @author NetoDevel
+ * @author IvanMarreta
+ */
 public class ParametersHelper {
 
 	public static List<String> extractParametersList(String parameters) {
@@ -23,9 +27,35 @@ public class ParametersHelper {
 		return new ArrayList<String>(Arrays.asList(parameters));
 	}
 	
-	public static String[] extractNameAndType(String param) {
+	public static Attribute extractNameAndType(String param) {
 		String [] nameAndType = param.split(":");
-		return nameAndType;
+		return new Attribute(nameAndType[0], nameAndType[1]);
 	}
 	
+	public static class Attribute {
+		
+		public String name;
+		public String type;
+
+		public Attribute(){
+		}
+		
+		public Attribute(String name, String type) {
+			super();
+			this.name = name;
+			this.type = type;
+		}
+		public String getName() {
+			return name;
+		}
+		public void setName(String name) {
+			this.name = name;
+		}
+		public String getType() {
+			return type;
+		}
+		public void setType(String type) {
+			this.type = type;
+		}
+	}
 }

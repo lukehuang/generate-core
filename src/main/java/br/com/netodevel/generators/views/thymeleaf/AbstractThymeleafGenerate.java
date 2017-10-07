@@ -14,9 +14,6 @@ import br.com.netodevel.helpers.ParametersHelper;
  */
 public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 	
-	private static final String TABS_FORM = "				";
-	private static final String TABS_SHOW = "		";
-	
 	public String generateThParameters(String parameters) {
 		String [] params = ParametersHelper.extractParameter(parameters);
 		List<String> listParameters = ParametersHelper.convertToList(params);
@@ -85,38 +82,62 @@ public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 					+ "</td>";
 		return code;
 	}
-
+	
 	public static String generateInputParameters(String parameters) {
-		String inputParameters = "";
-		String [] params = parameters.split(" ");
-		for (int i = 0; i < params.length; i++) {
-			String [] nameAndType = params[i].split(":");
-			
-			inputParameters += TABS_FORM + "<div class=\"form-group\"> \n";
-			inputParameters += TABS_FORM + "	<label for=\""+ nameAndType[0] +"\">"+ StringUtils.capitalize(nameAndType[0]) +"</label>  \n";
-			inputParameters += TABS_FORM + "	<input id=\""+ nameAndType[0] +"\" name=\"" + nameAndType[0] + "\" type=\"text\" class=\"form-control\" th:field=\"*{"+ nameAndType[0] +"}\" />  \n";
-			inputParameters += TABS_FORM + "</div> \n";
-		}
-		
-		return inputParameters;
+		String [] params = ParametersHelper.extractParameter(parameters);
+		List<String> listParameters = ParametersHelper.convertToList(params);
+
+		return listParameters.stream()
+				  .map(p -> genereateInput(p))
+				  .collect(Collectors.joining());
 	}
 	
-	public String generateShowParameters(String paramClassName, String parameters) {
-		String inputParameters = "";
-		String [] params = parameters.split(" ");
-		for (int i = 0; i < params.length; i++) {
-			String [] nameAndType = params[i].split(":");
-			inputParameters += TABS_SHOW + "<div class=\"form-group\"> \n";
-			inputParameters += TABS_SHOW + "	<label for=\""+ nameAndType[0] +"\">"+ StringUtils.capitalize(nameAndType[0]) +": </label>  \n";
-			inputParameters += TABS_SHOW + "	<span th:text=\"${" + paramClassName + "." + nameAndType[0] + "}\"></span> \n";
-			inputParameters += TABS_SHOW + "</div> \n";
-		}
-		return inputParameters;
+	/**
+	 * Result code:
+		<div class="form-group"> 
+		 <label for="name">Name</label>  
+		 <input id="name" name="name" type="text" class="form-control" th:field="*{name}" />  
+		</div> 
+	 * @param param
+	 * @return
+	 */
+	public static String genereateInput(String param) {
+		Attribute attribute = ParametersHelper.extractNameAndType(param);
+		String code = "\t\t\t <div class=\"form-group\"> \n" +
+					  "\t\t\t   <label for=\""+ attribute.getName() +"\">"+ StringUtils.capitalize(attribute.getName()) +"</label>  \n" +
+				  	  "\t\t\t   <input id=\""+ attribute.getName() +"\" name=\"" + attribute.getName() + "\" type=\"text\" class=\"form-control\" th:field=\"*{"+ attribute.getName() +"}\" />  \n" +
+					  "\t\t\t </div> \n";
+		return code;
+	}
+
+	
+	public String generateShowParameters(String className, String parameters) {
+		String [] params = ParametersHelper.extractParameter(parameters);
+		List<String> listParameters = ParametersHelper.convertToList(params);
+
+		String result = listParameters.stream()
+				  .map(param -> generateShow(className, param))
+				  .collect(Collectors.joining());
+		return result;
 	}
 	
-	public static void main(String[] args) {
-		AbstractThymeleafGenerate g = new AbstractThymeleafGenerate();
-		System.out.println(g.generateTdParameters("User", "name:String email:String"));
+	/**
+	 * Code Result:
+	 	<div class="form-group"> 
+		 <label for="name">Name</label>  
+		 <span th:text="${user.name}"></span> 
+		</div> 
+	 * @param className
+	 * @param param
+	 * @return
+	 */
+	public String generateShow(String className, String param) {
+		Attribute attribute = ParametersHelper.extractNameAndType(param);
+		String code = "<div class=\"form-group\"> \n" +
+					  	" <label for=\""+ attribute.getName() +"\">"+ StringUtils.capitalize(attribute.getName()) +"</label>  \n" +
+					  	" <span th:text=\"${" + className.toLowerCase() + "." + attribute.getName() + "}\"></span> \n" +
+					  "</div> \n";
+		return code;
 	}
 	
 }

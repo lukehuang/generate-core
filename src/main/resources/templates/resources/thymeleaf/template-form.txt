@@ -20,6 +20,7 @@
 			<input type="hidden" th:field="*{id}" /> 
 			
 ${input_parameters}
+			
 			<button type="submit" class="btn btn-success">Save</button>
 			<a th:href="@{url_path}" class="btn btn-default">Back</a>
 		</form>

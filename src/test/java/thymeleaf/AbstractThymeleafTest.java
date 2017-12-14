@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.netodevel.core.GeneratorConstants;
 import br.com.netodevel.generators.views.thymeleaf.AbstractThymeleafGenerate;
 
 /**
@@ -22,9 +23,9 @@ public class AbstractThymeleafTest {
 	
 	@Test
 	public void testGenerateThParameters() {
-		String outputExpected = "\t\t\t <th>Name</th> \n"
-				    + "\t\t\t <th>Email</th> \n"
-				    + "\t\t\t <th>Action</th>";
+		String outputExpected = GeneratorConstants.INDENT_HTML + " <th>Name</th> \n"
+				+ GeneratorConstants.INDENT_HTML + " <th>Email</th> \n"
+				+ GeneratorConstants.INDENT_HTML + " <th>Action</th>";
 		assertEquals(outputExpected, this.abstractThymeleafGenerate.generateThParameters("name:String email:String"));
 	}
 	

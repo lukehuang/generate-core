@@ -3,9 +3,11 @@ package br.com.netodevel.generators.views.thymeleaf;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.cglib.beans.BeanCopier.Generator;
 import org.springframework.util.StringUtils;
 
 import br.com.netodevel.core.Attribute;
+import br.com.netodevel.core.GeneratorConstants;
 import br.com.netodevel.core.ReadScaffoldInfo;
 import br.com.netodevel.helpers.ParametersHelper;
 
@@ -22,7 +24,7 @@ public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 					  .map(this::generateTh)
 					  .collect(Collectors.joining());
 		
-		String thAction = "\t\t\t <th>Action</th>";
+		String thAction = GeneratorConstants.INDENT_HTML + " <th>Action</th>";
 		return result + thAction;
 	}
 	
@@ -36,7 +38,7 @@ public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 		String[] paramSplit = param.split(":");
 		String name = StringUtils.capitalize(paramSplit[0]);
 
-		String code = "\t\t\t <th>" + name + "</th> \n";
+		String code = GeneratorConstants.INDENT_HTML + " <th>" + name + "</th> \n";
 		return code;
 	}
 	
@@ -60,7 +62,7 @@ public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 	 */
 	public static String generateTd(String className, String parameters) {
 		Attribute attribute = ParametersHelper.extractNameAndType(parameters);
-		String code = "<td th:text=\"${" + className.toLowerCase() + "." + attribute.getName() + "}\"></td> \n";
+		String code = GeneratorConstants.INDENT_HTML + " <td th:text=\"${" + className.toLowerCase() + "." + attribute.getName() + "}\"></td> \n";
 		return code;
 	}
 	
@@ -75,11 +77,11 @@ public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 	 * @return
 	 */
 	public static String generateTdLinks(String className) {
-		String code = "<td>\n"
-							+ "  <a th:href=\"@{/"+ className.toLowerCase() + "s/{id}(id = " + "${" + className.toLowerCase() + ".id}" + ")}\">Show</a> \n"
-							+ "  <a th:href=\"@{/"+ className.toLowerCase() + "s/{id}/edit(id = " + "${" + className.toLowerCase() + ".id}" + ")}\">Edit</a> \n"
-							+ "  <a href=\"#\">Destroy</a> \n"
-					+ "</td>";
+		String code = GeneratorConstants.INDENT_HTML + " <td>\n"
+							+ GeneratorConstants.INDENT_HTML + "\t  <a th:href=\"@{/"+ className.toLowerCase() + "s/{id}(id = " + "${" + className.toLowerCase() + ".id}" + ")}\">Show</a> \n"
+							+ GeneratorConstants.INDENT_HTML + "\t  <a th:href=\"@{/"+ className.toLowerCase() + "s/{id}/edit(id = " + "${" + className.toLowerCase() + ".id}" + ")}\">Edit</a> \n"
+							+ GeneratorConstants.INDENT_HTML + "\t  <a href=\"#\">Destroy</a> \n"
+							+ GeneratorConstants.INDENT_HTML + " </td>";
 		return code;
 	}
 	

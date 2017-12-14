@@ -13,4 +13,5 @@ public final class GeneratorConstants {
 	public static final String SPACE = " ";
 	public static final String LIST_EACH = "list";
 	public static final String INDENT_HTML = "\t\t\t\t\t";
+	public static final String INDENT_HTML_SHOW = "\t\t";
 }

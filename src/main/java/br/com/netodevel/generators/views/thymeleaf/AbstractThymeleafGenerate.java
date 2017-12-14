@@ -113,7 +113,7 @@ public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 	}
 
 	
-	public String generateShowParameters(String className, String parameters) {
+	public static String generateShowParameters(String className, String parameters) {
 		String [] params = ParametersHelper.extractParameter(parameters);
 		List<String> listParameters = ParametersHelper.convertToList(params);
 
@@ -133,12 +133,12 @@ public class AbstractThymeleafGenerate extends ReadScaffoldInfo {
 	 * @param param
 	 * @return
 	 */
-	public String generateShow(String className, String param) {
+	public static String generateShow(String className, String param) {
 		Attribute attribute = ParametersHelper.extractNameAndType(param);
-		String code = "<div class=\"form-group\"> \n" +
-					  	" <label for=\""+ attribute.getName() +"\">"+ StringUtils.capitalize(attribute.getName()) +"</label>  \n" +
-					  	" <span th:text=\"${" + className.toLowerCase() + "." + attribute.getName() + "}\"></span> \n" +
-					  "</div> \n";
+		String code = GeneratorConstants.INDENT_HTML_SHOW + "<div class=\"form-group\"> \n" +
+				  		GeneratorConstants.INDENT_HTML_SHOW + "\t <label for=\""+ attribute.getName() +"\">"+ StringUtils.capitalize(attribute.getName()) +"</label>  \n" +
+					  	GeneratorConstants.INDENT_HTML_SHOW + "\t <span th:text=\"${" + className.toLowerCase() + "." + attribute.getName() + "}\"></span> \n" +
+					  	GeneratorConstants.INDENT_HTML_SHOW + "</div> \n";
 		return code;
 	}
 	

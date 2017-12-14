@@ -4,6 +4,9 @@ import br.com.netodevel.core.GeneratorConstants;
 import br.com.netodevel.core.view.GeneratorView;
 import br.com.netodevel.core.view.GeneratorViewOptions;
 
+/**
+ * @author NetoDevel
+ */
 public class GeneratorThymeleafIndex extends GeneratorView {
 
 	private AbstractThymeleafGenerate abstractThymeleafGenerate;
